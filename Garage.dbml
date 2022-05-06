@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Garage" Class="GarageDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=Garage;User ID=sa" SettingsObjectName="SerieGarage.Properties.Settings" SettingsPropertyName="GarageConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Garage" Member="Garage">
+    <Type Name="Garage">
+      <Column Name="idG" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nomG" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="idR" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Association Name="Reparation_Garage" Member="Reparation" ThisKey="idR" OtherKey="idR" Type="Reparation" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Voiture" Member="Voiture">
+    <Type Name="Voiture">
+      <Column Name="Immat" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MarqueV" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="ModeleV" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="TelProprietaire" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Association Name="Voiture_Reparation" Member="Reparation" ThisKey="Immat" OtherKey="MatV" Type="Reparation" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Piece" Member="Piece">
+    <Type Name="Piece">
+      <Column Name="idP" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NomP" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PrixP" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Association Name="Piece_Utilise" Member="Utilise" ThisKey="idP" OtherKey="idP" Type="Utilise" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Reparation" Member="Reparation">
+    <Type Name="Reparation">
+      <Column Name="idR" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DateR" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="PrixR" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="MatV" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="Reparation_Garage" Member="Garage" ThisKey="idR" OtherKey="idR" Type="Garage" />
+      <Association Name="Reparation_Utilise" Member="Utilise" ThisKey="idR" OtherKey="idR" Type="Utilise" />
+      <Association Name="Voiture_Reparation" Member="Voiture" ThisKey="MatV" OtherKey="Immat" Type="Voiture" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Utilise" Member="Utilise">
+    <Type Name="Utilise">
+      <Column Name="idU" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Qte" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idR" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="idP" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Association Name="Piece_Utilise" Member="Piece" ThisKey="idP" OtherKey="idP" Type="Piece" IsForeignKey="true" />
+      <Association Name="Reparation_Utilise" Member="Reparation" ThisKey="idR" OtherKey="idR" Type="Reparation" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
